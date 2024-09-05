@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-btn-primary{
+  background-color: #2f8bb5 !important ;
+  border-color: #2f8bb5 !important;
+}
+.ant-pagination-item-active{
+  border-color: #3fc060  !important ;
+}
+li.ant-pagination-item-active a {
+  color: #3fc060 !important;
+}
+.ant-menu-item-selected{
+  background-color: #2f8bb5 !important;
+}
+.ant-menu-item-selected span{
+  color: white !important;
+}
+.ant-menu-item-active{
+  color: #2f8bb5 !important;
+}

@@ -1,0 +1,36 @@
+
+ 
+ .container{
+   margin-left: 10px;
+   margin-right: 10px;
+   margin-bottom: 5px;
+ 
+   border-radius: 20px;
+  border: 2px outset #269799 ;
+  
+ }
+ .content{
+  height: 100%;
+  width: 84%;
+  float: right;
+ 
+ }
+ .row{
+  
+  margin: auto;
+  height:  50px;
+  
+  
+ }
+ .name{
+  font-weight: bold;
+ 
+  
+ }
+ .subTitle{
+ color: gray;
+ height: "40%";
+ font-size: 15px;
+ 
+ 
+ }

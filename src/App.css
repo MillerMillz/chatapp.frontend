@@ -1,38 +1,120 @@
-.App {
+Form Button {
+  width: 100%;
+}
+
+h2 {
+  color: #313131;
+}
+
+h6 {
+  color: greenyellow;
+}
+
+hr.line {
+  border: 1px solid #66d9ff;
+  width: 175px;
+}
+
+.app {
+  margin: auto;
+
+  padding-top: 40px;
+  width: 950px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.lobby {
+  width: 400px;
+  margin: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.chat-room {
+  display: grid;
+  width: 84%;
+}
+.chat {
+  display: grid;
+  width: 100%;
+}
+.leave-room {
+  text-align: right;
+  padding-top: 30px;
+  margin-bottom: 4px;
+}
+.room-details{
+  background-color: #D2D2D2;
+  height: 100px;
+  border-bottom: 2px solid lightgray;
+}
+.room-info{
+  float: left;
+}
+.user-list {
+  float: right;
+  background-color: #313131;
+  color:white;
+  padding-left: 30px;
+  width: 12.9%;
+  height: 640px;
+  position: absolute;
+  top: 100px;
+  right: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.message-container {
+  height: 600px;    
+  background-color: white;
+  overflow: auto;
+  padding-top: 10px;
+  border-radius: 5px;
+  margin-bottom: 2px;
 }
 
-.App-link {
-  color: #61dafb;
+.user-message {
+  text-align: right;
+  padding-right: 5px;
+  font-size: 18px;
+}
+.user-message-me {
+ 
+  text-align: left;
+  padding-left: 5px;
+  font-size: 18px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user-message-bot {
+  text-align: center;
+  padding-left: 5px;
+  font-size: 18px;
 }
+.date {
+  text-align: center;
+  color: #313131;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.message {
+  display: inline-flex;
+  margin: 0px auto 0px auto;
+  max-width: 66%;
+  padding: 5px;
+  font-size: 18px;
+  color:white;
+  border-radius: 20px;
+  margin-top: 3px;
+}
+
+.from-user {
+  font-size: small;
+  margin-bottom: 3px;
+  margin-right: 5px;
+}
+
+.limitedTextForBio {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* 3 lines * 1.5 line-height */
+  overflow: hidden;
+  text-overflow: ellipsis;}
+
