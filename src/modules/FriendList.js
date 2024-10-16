@@ -19,6 +19,7 @@ async function FetchUsers() {
   if(result.success)
   {
       setUserList(result.response);
+      console.log(result.response);
   }
   else
   {
@@ -59,7 +60,7 @@ useEffect(() => {
           <MDBIcon icon='search' />
         </MDBBtn>
       </MDBInputGroup>
-        <h1 className='mx-auto'>Friend suggestions</h1>
+        <h1 className='mx-auto'>Friends</h1>
        
     </div>
     </div>

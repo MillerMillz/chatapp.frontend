@@ -4,7 +4,11 @@ import default_image from '../Assets/Images/default_image.jpg'
 import { useEffect, useState } from 'react'
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import {get,post} from '../apiCalls'
+import apiRoutes from '../apiRoutes'
 import MenuPopUp from './MenuPopup';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../Contexts/UserContext';
 dayjs.extend(relativeTime);
 
 
@@ -13,7 +17,52 @@ const FriendListItem = ({friendship,user,Unfriend}) =>{
     const [display,setDisplay] = useState(default_image);
     const [trigger, setTrigger] = useState(false);
 const [message, setMessage] = useState('');
+const {Authuser} = useUserContext();
+const navigate = useNavigate();
+
+async function HandleClick() {
+
+    const result = await get(apiRoutes.chat+'friend/'+user.id);
+    console.log(result);
+    if(result.success)
+    {
+        if(result.response==null)
+        {
+            setTrigger(true);
+        }
+        else{
+            navigate(`/chats/chat/${result.response.id}`,{replace:true})
+        }
+    }
+    else
+    {
+        console.log('fail from frnd lst itm')
+    }
     
+}
+const sendMessage = async (mess) =>{
+    const message = {
+        senderId:Authuser.id,
+        messageContent:mess,
+        messageType:"text",
+        viewed:false
+    }
+    const messageResult = await post(apiRoutes.message,{message:message,chat:{
+        ownerId:Authuser.id,
+        friendId:user.id,
+        friendshipId:friendship.id
+    }});
+    if(messageResult.success)
+    {
+       navigate('/chats',{replace:true})
+        
+    }
+    else
+    {
+        console.log(messageResult.errors)
+    }
+    
+}
 
 useEffect(() => {
     if(user.image){
@@ -43,7 +92,7 @@ useEffect(() => {
                </div>
             </div>
             <div className='d-flex justify-content-around'>
-                <button className='btn btn-primary' type='button' onClick={()=>{setTrigger(true)}}>Message</button>
+                <button className='btn btn-primary' type='button' onClick={()=>{HandleClick()}}>Message</button>
                 <button className='btn btn-secondary' type='button' onClick={()=>{Unfriend(friendship.id)}}>Unfriend</button>
 
             </div>
@@ -70,7 +119,7 @@ useEffect(() => {
                         <textarea className="form-control" onChange={(e)=>{setMessage(e.target.value)}}  rows="5"></textarea>
                         </div>
                         <div className='d-flex justify-content-around'>
-                <button className='btn btn-primary btn-lg' disabled={message===''} type='button' onClick={()=>{}}>Send Message <i class="bi bi-send"></i></button>
+                <button className='btn btn-primary btn-lg' disabled={message===''} type='button' onClick={()=>{sendMessage(message)}}>Send Message <i class="bi bi-send"></i></button>
               
 
             </div>

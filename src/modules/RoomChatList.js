@@ -70,7 +70,7 @@ const RoomChatList = () => {
             Authorization:`Bearer ${localStorage.getItem('jwt')}`
          }});
         if(res.data.success){
-            navigate(`room/${res.data.response.id}`)
+            navigate(`new/${res.data.response.id}`)
         }
         }
         catch(error)

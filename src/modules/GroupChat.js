@@ -6,7 +6,7 @@ import ConnectedUsers from "../components/ConnectedUsers";
 import { useNavigate, useParams } from "react-router-dom";
 import default_display from '../Assets/Images/icons-5235125_1280.webp'
 import { useEffect, useState } from "react";
-import { get,put,post} from "../apiCalls";
+import { get,put2,post} from "../apiCalls";
 import apiRoutes from "../apiRoutes";
 import { useHubContext } from "../Contexts/HubContext";
 import { useUserContext } from "../Contexts/UserContext";
@@ -22,7 +22,12 @@ const GroupChat = () =>{
    
     const [roomChat,setRoomChat] = useState();
     const [messages,setMessages] = useState([]);
-
+     const update = async (i) =>{
+    
+    
+        var result = await put2(apiRoutes.message+i+"/"+true);
+        console.log(result); 
+    }
     const fetchChat=async () =>{
         var result = await get(apiRoutes.roomChat+id);
         if(result.success)
@@ -30,9 +35,10 @@ const GroupChat = () =>{
             setRoomChat(result.response.chatRoom);
             if(result.response?.chatRoom?.image){
                 setDisplay(result.response.chatRoom.image)}
-                if(result.response.lastMessage.viewed===false)
+                if(result.response.lastMessage.viewed===false&&result.response.lastMessage.senderID!==Authuser.id)
                 {
-                    await update(result.response);
+                    console.log("at fetch")
+                    await update(id);
                 }
         }
         else{
@@ -40,7 +46,7 @@ const GroupChat = () =>{
         }
     }
     const fetchMessages = async () =>{
-        var result = await get(apiRoutes.message+id);
+        var result = await get(apiRoutes.message+"RoomMessages/"+id);
         if(result.success)
         {
             setMessages(result.response);
@@ -51,21 +57,7 @@ const GroupChat = () =>{
             console.log(result.errors);
         }
     }
-    const update = async (item) =>{
-         const message = {
-            id:item.lastMessage?.id,
-            senderID:item.lastMessage?.senderID,
-            time:item.lastMessage?.time,
-            replyID:item.lastMessage?.replyID,
-            messageContent:item.lastMessage?.messageContent,
-            messageType:item.lastMessage?.messageType,
-            viewed:true,
-            filePath:item.lastMessage?.truePath
-        }
-
-        var result = await put(apiRoutes.message,message); 
-        console.log(item); 
-}
+    
 const sendMessage = async (mess) =>{
     const message = {
         senderId:Authuser.id,
@@ -73,7 +65,8 @@ const sendMessage = async (mess) =>{
         messageType:"text",
         viewed:false
     }
-    const messageResult = await post(apiRoutes.message+roomChat.id,message);
+    console.log("isNotNew")
+    const messageResult = await post(apiRoutes.message+id+"/"+false,message);
     if(messageResult.success)
     {
         setMessages([...messages,messageResult.response])
@@ -85,12 +78,22 @@ const sendMessage = async (mess) =>{
     }
     
 }
-useEffect(() => {
-    
-   
+const Refresh = async () =>{
     if(messageRefresh){
-        fetchMessages();
+        var result = await get(apiRoutes.message+"RoomMessages/"+id);
+        if(result.success){
+            setMessages(result.response);
+        if(messages.length>0){
+           
+            if(result.response[result.response.length-1]?.user?.id!==Authuser.id){
+                console.log("at refresh message")
+                console.log(messages[messages.length-1]);
+            update(id);}
+        }}
     }
+}
+useEffect(() => {
+    Refresh();
      
     }, [messageRefresh]);
 useEffect(()=>{

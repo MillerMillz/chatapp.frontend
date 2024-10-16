@@ -7,7 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { post } from "../../apiCalls";
+import { post,get } from "../../apiCalls";
 import apiRoutes from "../../apiRoutes";
 import { useUserContext } from "../../Contexts/UserContext";
 import { useHubContext } from "../../Contexts/HubContext";
@@ -18,6 +18,7 @@ const RoomListItem = ({chatRoom,buttonContent}) =>
     const {Authuser} = useUserContext();
     const {JoinRoom} = useHubContext();
 const [display,setDisplay] = useState(default_image);
+const [roomChat, setRoomChat] = useState();
 const navigate = useNavigate();
 const handleClick = async () =>{
     if(buttonContent.text==="Join")
@@ -31,7 +32,17 @@ const handleClick = async () =>{
     }
     else
     {
-        navigate(`new/${chatRoom.id}`)
+        var res = await get(apiRoutes.roomChat+chatRoom.id+"/"+Authuser.id);
+        if(res.success)
+        {
+            if(res.response)
+            {
+                 setRoomChat(res.response)
+            navigate(`room/${res.response.id}`)
+            }else{
+        navigate(`new/${chatRoom.id}`)}
+           
+        }
     }
 }
     useEffect(()=>{

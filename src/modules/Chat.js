@@ -118,10 +118,11 @@ const getFriendShip= async (frId)=>{
     const result = await get(apiRoutes.friendship+frId)
     if(result.success)
     {
+        if(result.response!==null){
         setFriendship(result.response)
         if(result.response.status==='Blocked')
         {
-            const res = await get(apiRoutes.friendship+"Block/"+friendship.id)
+            const res = await get(apiRoutes.friendship+"Block/"+frId)
             if(res.success)
             {
                 setBlocker(res.response);
@@ -130,7 +131,7 @@ const getFriendShip= async (frId)=>{
             {
                 console.log(res.errors);
             }
-        }
+        }}
     }
     else
     {
@@ -146,7 +147,8 @@ const sendMessage = async (mess) =>{
     }
     const messageResult = await post(apiRoutes.message,{message:message,chat:{
         ownerId:Authuser.id,
-        friendId:chat?.user.id
+        friendId:chat?.user.id,
+        friendshipId:friendship.id
     }});
     if(messageResult.success)
     {
@@ -190,7 +192,7 @@ const fetchChat = async () =>{
 const update = async (i) =>{
     
 
-        var result = await put2(apiRoutes.message+i);
+        var result = await put2(apiRoutes.message+i+"/"+false);
         console.log(result); 
 }
 useEffect(()=>{
@@ -222,7 +224,8 @@ return<div>
     
     <div className="chat">
         <MessageContainer messages={messages} />
-        <SendMessageForm sendMessage={sendMessage} />
+        {friendship?.status=='Blocked' ? "" :
+        <SendMessageForm sendMessage={sendMessage} /> }
 
     </div>
     <ImagePopup trigger={trigger} setTrigger={setTrigger}>
@@ -262,7 +265,7 @@ return<div>
                     <h4>Since : </h4>
                 </div>
                 <div className="col-9 d-flex align-items-center justify-content-start">
-                    <h6>{dayjs(friendship?.time).date()}/{dayjs(friendship?.time).month()}/{dayjs(friendship?.time).year()} </h6>
+                   {friendship? <h6>{dayjs(friendship?.time).date()}/{dayjs(friendship?.time).month()}/{dayjs(friendship?.time).year()} </h6>:<h6>N/A</h6>}
                 </div>
             </div>
             <hr></hr>

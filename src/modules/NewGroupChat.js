@@ -20,7 +20,7 @@ const NewGroupChat = () =>{
     const {id} = useParams();
     const [roomChat,setRoomChat] = useState();
     const [messages,setMessages] = useState([]);
-    const [chat,setChat] =  useState();
+    const [chat,setChat] =  useState(null);
 
     const fetchChat=async () =>{
         var result = await get(apiRoutes.chatRoom+id);
@@ -37,14 +37,24 @@ const NewGroupChat = () =>{
     }
   
      const fetchMessages = async () =>{
-        var result = await get(apiRoutes.message+roomChat.id);
+        if(chat){
+        var result = await get(apiRoutes.message+chat.id);
         if(result.success)
         {
             setMessages(result.response);
+            
         }
         else{
             console.log(result.errors);
-        } 
+        } }
+       else
+            {
+                const res = await get(apiRoutes.roomChat+id+"/"+Authuser.id);
+                if(res.success)
+                {
+                    setChat(res.response);
+                }
+            }
     }
     /* const update = async (item) =>{
         const message = {
@@ -68,16 +78,36 @@ const sendMessage = async (mess) =>{
         messageType:"text",
         viewed:false
     }
-    const messageResult = await post(apiRoutes.message+chat.id,message);
-    if(messageResult.success)
+    if(chat){
+        console.log("is not new")
+    const messageResult = await post(apiRoutes.message+chat?.id+"/"+false,message);
+     if(messageResult.success)
     {
         setMessages([...messages,messageResult.response])
-        
-    }
-    else
+       
+    } else
     {
         console.log(messageResult.errors)
     }
+    }else{
+        console.log("isNew")
+        const messageResult = await post(apiRoutes.message+roomChat?.id+"/"+true,message);
+     if(messageResult.success)
+    {
+        setMessages([...messages,messageResult.response])
+        const res = await get(apiRoutes.roomChat+id+"/"+Authuser.id);
+        if(res.success)
+        {
+            setChat(res.response);
+        }
+        
+    } else
+    {
+        console.log(messageResult.errors)
+    }
+    }
+   
+   
     
 }
 useEffect(() => {
@@ -87,7 +117,7 @@ useEffect(() => {
         fetchMessages();
     }
      
-    }, [messageRefresh]);
+    }, [messageRefresh,chat]);
 useEffect(()=>{
     fetchChat();
    

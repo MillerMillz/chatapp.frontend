@@ -9,7 +9,6 @@ import styles from './style.module.css'
 import "bootstrap-icons/font/bootstrap-icons.css"
 import { useUserContext } from "../../Contexts/UserContext";
 import ImagePopup from "../ImagePopup";
-import { configConsumerProps } from "antd/es/config-provider";
 dayjs.extend(relativeTime);
 
 const ChatListItem = ({chat}) =>

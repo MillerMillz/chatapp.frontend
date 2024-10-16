@@ -1,18 +1,31 @@
-import {Image,Badge} from "antd"
+import {Badge} from "antd"
 import default_image from "../../Assets/Images/default_image.jpg"
 import "bootstrap/dist/css/bootstrap.min.css"
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useUserContext } from "../../Contexts/UserContext";
 dayjs.extend(relativeTime);
 
 const RoomChatListItem = ({roomChat}) =>
 {
 const navigate = useNavigate();
+const {Authuser} = useUserContext();
 const [display,setDisplay] = useState(default_image);
-    const {chatRoom,lastMessage,id} =roomChat;
+    const {chatRoom,lastMessage,id,unreadMessages} =roomChat;
+    const getTime = () =>{
+        const today = new Date();
+        const messageDate = new Date(lastMessage.time);
 
+        if(today.getDate()===messageDate.getDate()&&today.getMonth()===messageDate.getMonth()&&today.getFullYear()===messageDate.getFullYear())
+        return `${dayjs(lastMessage.time).hour()}:${dayjs(lastMessage.time).minute()}`;
+
+        if(today.getDate()-messageDate.getDate()===1&&today.getMonth()===messageDate.getMonth()&&today.getFullYear()===messageDate.getFullYear())
+        return 'Yesterday';
+
+        return `${dayjs(lastMessage.time).date()}/${dayjs(lastMessage.time).month()}/${dayjs(lastMessage.time).year()}`
+    }
     useEffect(()=>{
 if(chatRoom.image)
 {
@@ -34,8 +47,8 @@ if(chatRoom.image)
             </div>
             <div className="col-2 d-flex align-items-center justify-content-center">
                 
-             <p style={{fontSize:30,color:lastMessage.viewed ? "green": "black"}}>{dayjs(lastMessage.time).hour() < 24 ? `${dayjs(lastMessage.time).hour()}:${dayjs(lastMessage.time).minute()}`:dayjs(lastMessage.time).fromNow(true)}</p>
-             {lastMessage.viewed ? "":<Badge count={id} overflowCount={99} color="green" style={{marginLeft:'20px',marginTop:'-10px'}}></Badge> }
+            <p style={{fontSize:30,color: "green"}}>{getTime()}</p>
+             <Badge count={unreadMessages} overflowCount={99} color= {(lastMessage.viewed || lastMessage.senderID===Authuser.id) ? "white":"green" } style={{marginLeft:'20px',marginTop:'-10px'}}></Badge> 
             </div>
            </div>
         </div>

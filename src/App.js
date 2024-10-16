@@ -10,6 +10,7 @@ import NewGroupChat from "./modules/NewGroupChat";
 import InviteList from "./modules/InviteList";
 import UserList from "./modules/UserList";
 import FriendList from "./modules/FriendList";
+import ProfileTag from "./components/ProfileTag";
 
 const {Sider,Content,Footer} = Layout;
 
@@ -19,6 +20,7 @@ const App = () => {
         <Sider style={{height:"100vh", backgroundColor:"white",overflow:"auto",position:"sticky",top:0,left:0}} width={"20%"}>
           <Image src={Xylem_Logo} preview={false} />
           <SideMenu/>
+          <ProfileTag/>
         </Sider>
         <Layout>
           <Content >
