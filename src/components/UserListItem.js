@@ -16,7 +16,7 @@ const UserListItem = ({user,sendInvite}) =>{
 
     return(<div className='col'>
         <div className='card pb-2'>
-            <img src={display} className='card-img-top' alt='display'/>
+            <img src={display} className='card-img-top' style={{width:"100%",height:250}} alt='display'/>
             <div className='card-body'>
                 <h5 className='card-title'>{user.firstName} {user.lastName}</h5>
                 <p className='card-text limitedTextForBio'>{user.bio} </p>

@@ -27,7 +27,7 @@ const MessageContainer = ({messages}) =>{
             let previousMessage = arr[index - 1] || null;
             let dateElement = previousMessage=== null? (dayjs(m.time).date() === dayjs(today).date() &&
             dayjs(m.time).month() === dayjs(today).month() &&
-            dayjs(m.time).year() === dayjs(today).year())?<div className="date" key={`date-${index}`}>Today</div>:<div className="date" key={`date-${index}`}>{dayjs(m.time).date()}/{dayjs(m.time).month()}/{dayjs(m.time).year()}</div>:null;
+            dayjs(m.time).year() === dayjs(today).year())?<div className="date" key={`date-${index}`}>Today</div>:<div className="date" key={`date-${index}`}>{dayjs(m.time).date()}/{dayjs(m.time).month()+1}/{dayjs(m.time).year()}</div>:null;
       
             if (previousMessage !== null) {
               if (
@@ -37,7 +37,7 @@ const MessageContainer = ({messages}) =>{
               ) {
                 dateElement = (dayjs(m.time).date() === dayjs(today).date() &&
                 dayjs(m.time).month() === dayjs(today).month() &&
-                dayjs(m.time).year() === dayjs(today).year())?<div className="date" key={`date-${index}`}>Today</div>:<div className="date" key={`date-${index}`}>{dayjs(m.time).date()}/{dayjs(m.time).month()}/{dayjs(m.time).year()}</div>;
+                dayjs(m.time).year() === dayjs(today).year())?<div className="date" key={`date-${index}`}>Today</div>:<div className="date" key={`date-${index}`}>{dayjs(m.time).date()}/{dayjs(m.time).month()+1}/{dayjs(m.time).year()}</div>;
               }
             }
       

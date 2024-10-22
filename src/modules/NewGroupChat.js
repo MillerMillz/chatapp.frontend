@@ -21,8 +21,9 @@ const NewGroupChat = () =>{
     const [roomChat,setRoomChat] = useState();
     const [messages,setMessages] = useState([]);
     const [chat,setChat] =  useState(null);
+const [members, setMembers] = useState([]);
 
-    const fetchChat=async () =>{
+    const fetchRoomChat=async () =>{
         var result = await get(apiRoutes.chatRoom+id);
         if(result.success)
         {
@@ -37,8 +38,10 @@ const NewGroupChat = () =>{
     }
   
      const fetchMessages = async () =>{
+        console.log(chat);
         if(chat){
-        var result = await get(apiRoutes.message+chat.id);
+        var result = await get(apiRoutes.message+"RoomMessages/"+chat.id);
+      
         if(result.success)
         {
             setMessages(result.response);
@@ -71,6 +74,14 @@ const NewGroupChat = () =>{
         var result = await put(apiRoutes.message,message);
         console.log(result); 
 } */
+const fetchChat = async () =>{
+    const res = await get(apiRoutes.roomChat+id+"/"+Authuser.id);
+        console.log(res);
+        if(res.success)
+        {
+            setChat(res.response);
+        }
+}
 const sendMessage = async (mess) =>{
     const message = {
         senderId:Authuser.id,
@@ -80,6 +91,7 @@ const sendMessage = async (mess) =>{
     }
     if(chat){
         console.log("is not new")
+        console.log(chat);
     const messageResult = await post(apiRoutes.message+chat?.id+"/"+false,message);
      if(messageResult.success)
     {
@@ -95,11 +107,7 @@ const sendMessage = async (mess) =>{
      if(messageResult.success)
     {
         setMessages([...messages,messageResult.response])
-        const res = await get(apiRoutes.roomChat+id+"/"+Authuser.id);
-        if(res.success)
-        {
-            setChat(res.response);
-        }
+        fetchChat();
         
     } else
     {
@@ -110,17 +118,31 @@ const sendMessage = async (mess) =>{
    
     
 }
+const fetchMembers = async () => {
+    if(chat){
+    var result = await get(apiRoutes.membership+"Members/"+chat.id+"/"+true);
+
+    if(result.success)
+    {
+         setMembers(result.response);
+    }
+    else{
+     console.log(result.errors);
+ }}
+ }
 useEffect(() => {
     
+    console.log(messageRefresh);
    
-    if(messageRefresh){
+   if(messageRefresh){
         fetchMessages();
-    }
+   }
+   
      
     }, [messageRefresh,chat]);
 useEffect(()=>{
-    fetchChat();
-   
+    fetchRoomChat();
+   fetchMembers();
    
 },[])
 
@@ -146,7 +168,7 @@ return<div>
         <SendMessageForm sendMessage={sendMessage} />
 
     </div>
-  {/* <ConnectedUsers users={connectedUsers}/> */}
+   <ConnectedUsers users={connectedUsers} members={members}/> 
 </div>}
 
 

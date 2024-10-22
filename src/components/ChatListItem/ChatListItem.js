@@ -9,12 +9,14 @@ import styles from './style.module.css'
 import "bootstrap-icons/font/bootstrap-icons.css"
 import { useUserContext } from "../../Contexts/UserContext";
 import ImagePopup from "../ImagePopup";
+import { useHubContext } from "../../Contexts/HubContext";
 dayjs.extend(relativeTime);
 
 const ChatListItem = ({chat}) =>
 {
 const navigate = useNavigate();
 const {Authuser} =  useUserContext();
+const {connectedUsers} = useHubContext();
 const [display,setDisplay] = useState(default_image);
 const [trigger,setTrigger] = useState(false);
     const {user,lastMessage,id,unreadMessages} =chat;
@@ -29,7 +31,7 @@ const [trigger,setTrigger] = useState(false);
         if(today.getDate()-messageDate.getDate()===1&&today.getMonth()===messageDate.getMonth()&&today.getFullYear()===messageDate.getFullYear())
         return 'Yesterday';
 
-        return `${dayjs(lastMessage.time).date()}/${dayjs(lastMessage.time).month()}/${dayjs(lastMessage.time).year()}`
+        return `${dayjs(lastMessage.time).date()}/${dayjs(lastMessage.time).month()+1}/${dayjs(lastMessage.time).year()}`
     }
 
     useEffect(()=>{
@@ -44,14 +46,22 @@ if(user.image)
 
     return (
     <div>
-        <div className="container shadow p-3 mb-2 bg-body rounded" style={{cursor:'pointer'}} onClick={()=>{navigate(`chat/${id}`)}}>
+        
+        <div className="container shadow pe-3 pt-3 pb-3 mb-2 bg-body rounded" style={{cursor:'pointer'}} onClick={()=>{navigate(`chat/${id}`)}}>
       
         <div className="content  ">
             <div className="row">  
             <div className="col-1 ">
+          <div style={{height:"100%",backgroundColor:connectedUsers.includes(user.id)?"#3fc060":"lightgrey", width:"4%"}}></div>
+               
+          </div>
+            <div className="col-1 " style={{marginLeft:"-7%"}}>
+          
+               
             <img src={display} onClick={(event)=>{ event.stopPropagation(); setTrigger(true)}}  class="rounded-circle" width={"100%"}  height={80} />
             </div>
-            <div className="col-9">
+           
+            <div className="col-8">
                    <p style={{fontSize:30,width:'85%',fontWeight:"bold"}}>{user.firstName} {user.lastName}</p>
                 
          <div style={{marginTop:-10,fontSize:15}} className={styles.limitedTextAlt}>{(lastMessage.senderID===Authuser.id) ? (lastMessage.viewed)? <i class="bi bi-check2-circle text-primary"></i> :<i class="bi bi-check2"></i>:""}{" "+lastMessage.messageContent}</div>

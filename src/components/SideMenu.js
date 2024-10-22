@@ -63,7 +63,7 @@ const ChatsMenuItem = ({ openedChats }) => (
 const SideMenu = () => {
     
     const {setToken,Authuser} = useUserContext();
-    const {messageRefresh,roomRefresh,inviteRefresh} =useHubContext();
+    const {messageRefresh,roomRefresh,inviteRefresh,closeConnection} =useHubContext();
     const [chats,setChats] = useState([]);
     const [roomChats, setRoomChats] = useState([]);
     const [invites, setInvites] = useState([]);
@@ -135,7 +135,7 @@ const SideMenu = () => {
         if(menuItem.key==="logout")
         {
             var res = post(apiRoutes.signOut);
-            console.log(res);
+            closeConnection();
             setToken(null);
             localStorage.removeItem('jwt');
             navigation('/',{replace:true})

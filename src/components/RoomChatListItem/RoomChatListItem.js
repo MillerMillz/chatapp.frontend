@@ -24,7 +24,7 @@ const [display,setDisplay] = useState(default_image);
         if(today.getDate()-messageDate.getDate()===1&&today.getMonth()===messageDate.getMonth()&&today.getFullYear()===messageDate.getFullYear())
         return 'Yesterday';
 
-        return `${dayjs(lastMessage.time).date()}/${dayjs(lastMessage.time).month()}/${dayjs(lastMessage.time).year()}`
+        return `${dayjs(lastMessage.time).date()}/${dayjs(lastMessage.time).month()+1}/${dayjs(lastMessage.time).year()}`
     }
     useEffect(()=>{
 if(chatRoom.image)

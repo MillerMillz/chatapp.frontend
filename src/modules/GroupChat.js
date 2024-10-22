@@ -19,7 +19,7 @@ const GroupChat = () =>{
     const{Authuser}=useUserContext();
     const {messageRefresh,connectedUsers} = useHubContext();
     const [display,setDisplay] = useState(default_display)
-   
+    const [members, setMembers] = useState([]);
     const [roomChat,setRoomChat] = useState();
     const [messages,setMessages] = useState([]);
      const update = async (i) =>{
@@ -44,6 +44,17 @@ const GroupChat = () =>{
         else{
             console.log(result.errors);
         }
+    }
+    const fetchMembers = async () => {
+       var result = await get(apiRoutes.membership+"Members/"+id+"/"+false);
+
+       if(result.success)
+       {
+            setMembers(result.response);
+       }
+       else{
+        console.log(result.errors);
+    }
     }
     const fetchMessages = async () =>{
         var result = await get(apiRoutes.message+"RoomMessages/"+id);
@@ -99,6 +110,7 @@ useEffect(() => {
 useEffect(()=>{
     fetchChat();
     fetchMessages();
+    fetchMembers();
    
 },[])
 
@@ -125,7 +137,7 @@ return<div>
         <SendMessageForm sendMessage={sendMessage} />
 
     </div>
-  { <ConnectedUsers users={connectedUsers}/> }
+  { <ConnectedUsers users={connectedUsers} members={members}/> }
 </div>}
 
 

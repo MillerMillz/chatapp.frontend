@@ -265,7 +265,7 @@ return<div>
                     <h4>Since : </h4>
                 </div>
                 <div className="col-9 d-flex align-items-center justify-content-start">
-                   {friendship? <h6>{dayjs(friendship?.time).date()}/{dayjs(friendship?.time).month()}/{dayjs(friendship?.time).year()} </h6>:<h6>N/A</h6>}
+                   {friendship? <h6>{dayjs(friendship?.time).date()}/{dayjs(friendship?.time).month()+1}/{dayjs(friendship?.time).year()} </h6>:<h6>N/A</h6>}
                 </div>
             </div>
             <hr></hr>

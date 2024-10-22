@@ -54,8 +54,8 @@ const HubContextProvider =({children})=>{
          });
 
          connection.on("RecieveConnectedUsers",(users)=>{
-            console.log("tyovo")
-             ConvertToFirstnames(users);
+           setConnectedUsers(users);
+          
          });
 
 
@@ -70,36 +70,11 @@ const HubContextProvider =({children})=>{
         }
     }
 
-    const ConvertToFirstnames = async (users) =>{
-        
-            var response = await fetch(apiRoutes.users,{
-                method:"post",
-                headers:new Headers({
-                    "Content-Type":"application/json",
-                    "Authorization":`Bearer ${localStorage.getItem('jwt')}`
-                }),
-                credentials:"include",
-                body:JSON.stringify(users)
-            });
-        
-            var data = await response.json();
-            console.log(data)
-           if(data.success)
-           {
-            setConnectedUsers(data.response)
-            connectedUsers.push(Authuser.firstName)
-            console.log(connectedUsers)
-            console.log(data.response)
-           }
-           else{
-            console.log('err')
-            console.log(data.errors)
-           }
-    }
-    const JoinRoom = async (room) =>{
+   
+    const JoinRoom = async (name) =>{
 
         try{
-            await connection.invoke("JoinRoom", {room}); 
+            await connection.invoke("JoinRoom", name); 
         }catch(e)
         {
             console.log(e)
@@ -142,7 +117,7 @@ const HubContextProvider =({children})=>{
 useEffect(()=>{
     if(Authuser){
     connect();
-RequestConnectedUsers();}
+}
 },[Authuser])
     return(
         <HubContext.Provider value={{sendMessageAlert,closeConnection,JoinRoom,connID,connection,messageRefresh,roomRefresh,usersRefresh,friendRefresh,inviteRefresh,connectedUsers}}>
