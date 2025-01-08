@@ -55,13 +55,13 @@ if(user.image)
           <div style={{height:"100%",backgroundColor:connectedUsers.includes(user.id)?"#3fc060":"lightgrey", width:"4%"}}></div>
                
           </div>
-            <div className="col-1 " style={{marginLeft:"-7%"}}>
+            <div className="col-2 col-lg-1" style={{marginLeft:"-7%"}}>
           
                
             <img src={display} onClick={(event)=>{ event.stopPropagation(); setTrigger(true)}}  class="rounded-circle" width={"100%"}  height={80} />
             </div>
            
-            <div className="col-8">
+            <div className="col-7 col-lg-8">
                    <p style={{fontSize:30,width:'85%',fontWeight:"bold"}}>{user.firstName} {user.lastName}</p>
                 
          <div style={{marginTop:-10,fontSize:15}} className={styles.limitedTextAlt}>{(lastMessage.senderID===Authuser.id) ? (lastMessage.viewed)? <i class="bi bi-check2-circle text-primary"></i> :<i class="bi bi-check2"></i>:""}{" "+lastMessage.messageContent}</div>

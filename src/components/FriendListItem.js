@@ -13,10 +13,9 @@ dayjs.extend(relativeTime);
 
 
 
-const FriendListItem = ({friendship,user,Unfriend}) =>{
+const FriendListItem = ({friendship,user,Unfriend,TriggerMenu}) =>{
     const [display,setDisplay] = useState(default_image);
-    const [trigger, setTrigger] = useState(false);
-const [message, setMessage] = useState('');
+    
 const {Authuser} = useUserContext();
 const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ async function HandleClick() {
     {
         if(result.response==null)
         {
-            setTrigger(true);
+            TriggerMenu(user.firstName,user.lastName,display,user.id,friendship.id);
         }
         else{
             navigate(`/chats/chat/${result.response.id}`,{replace:true})
@@ -40,7 +39,7 @@ async function HandleClick() {
     }
     
 }
-const sendMessage = async (mess) =>{
+/* const sendMessage = async (mess) =>{
     const message = {
         senderId:Authuser.id,
         messageContent:mess,
@@ -62,7 +61,7 @@ const sendMessage = async (mess) =>{
         console.log(messageResult.errors)
     }
     
-}
+} */
 
 useEffect(() => {
     if(user.image){
@@ -98,7 +97,7 @@ useEffect(() => {
             </div>
             
         </div>
-        <MenuPopUp trigger={trigger} setTrigger={setTrigger}>
+      {/*   <MenuPopUp trigger={trigger} setTrigger={setTrigger}>
                   <div className='container mt-5'>
                     <div className='row my-5'>
                         <div className='col-3 d-flex justify-content-end'>
@@ -124,7 +123,7 @@ useEffect(() => {
 
             </div>
                   </div>
-            </MenuPopUp>
+            </MenuPopUp> */}
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState,useContext } from "react";
 import { get } from "../apiCalls";
 import apiRoutes from "../apiRoutes";
+import default_image from "../Assets/Images/default_image.jpg"
 
 const UserContext = createContext({});
 
@@ -11,7 +12,6 @@ const UserContextProvider =({children})=>{
     const [connID,setConnID ]= useState();
     const [myRooms,setMyRooms] = useState([]);
     const userId= Authuser?.id;
-    
     const FetchUser = async () =>{
         
        

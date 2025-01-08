@@ -1,9 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useUserContext } from "../Contexts/UserContext";
+import { useHubContext } from "../Contexts/HubContext";
+import { useEffect } from "react";
 
 const ProfileTag = () =>{
 
-    const { Authuser } = useUserContext()
+    const { Authuser, FetchUser} = useUserContext()
+    const {usersRefresh} = useHubContext();
+
+    useEffect(()=>{
+
+        FetchUser();
+    },[usersRefresh])
 
     return(
         <div className="fixed-bottom bg-secondary" style={{width:"20%"}}>

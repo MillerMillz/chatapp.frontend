@@ -15,7 +15,7 @@ const InviteList = () =>{
     const navigate = useNavigate();
     const [sentInvitesFilter, setSentInvitesFilter] = useState('');
     const [sentInvites, setSentInvites] = useState([]);
-    const [invites, setInvites] = useState();
+    const [invites, setInvites] = useState([]);
     const {inviteRefresh} = useHubContext();
 
  
@@ -61,6 +61,8 @@ const AcceptInvite = async (invite) =>{
   async function FetchSentInvites() 
   {
     const result = await get(apiRoutes.invite+'sentInvites');
+    console.log("sent invites+++++++++++")
+    console.log(result);
     if(result.success)
     {
         setSentInvites(result.response);
@@ -105,20 +107,7 @@ useEffect(() => {
 </div>
 <MenuPopUp trigger={trigger} setTrigger={setTrigger} >
 
-   {/*    <MDBInputGroup>
-      <MDBInput onChange={(e)=>{userListFilter(e.target.value)}} label='Search for an existing chat room' />
-        <MDBBtn onClick={() => console.log("awesome")} rippleColor='dark'>
-          <MDBIcon icon='search' />
-        </MDBBtn>
-      </MDBInputGroup>
-      <hr style={{color:"#66d9ff"}}/> 
-      <div style={{width:"100%",maxHeight:"55vh",overflowY:'scroll'}}>
-        {
-            userList.filter((item)=>{
-                return userListFilter.toLowerCase() ==='' ? item: item.name.toLowerCase().includes(userListFilter)
-            }).map((item)=><RoomListItem key={item.id} buttonContent={{variant:"primary",text:"Chat"}} chatRoom={item}/>)
-        }
-        </div> */}
+  
       <div className='mt-3'>
       
       <MDBInputGroup>
@@ -131,7 +120,7 @@ useEffect(() => {
       <div style={{width:"100%",maxHeight:"55vh",overflowY:'scroll'}}>
         {sentInvites?
             sentInvites.filter((item)=>{
-                return sentInvitesFilter.toLowerCase() ==='' ? item: item.name.toLowerCase().includes(sentInvitesFilter)
+                return sentInvitesFilter.toLowerCase() ==='' ? item: item.name.toLowerCase().includes(sentInvitesFilter) 
             }).map((item)=><SentInviteListItem key={item.id} DeclineInvite={DeclineInvite}  invite={item.invite} user={item.user}/>):
             <p style={{backgroundColor:"pink",textAlign:"center"}}>You have not sent any invite</p>
         }

@@ -11,6 +11,7 @@ import InviteList from "./modules/InviteList";
 import UserList from "./modules/UserList";
 import FriendList from "./modules/FriendList";
 import ProfileTag from "./components/ProfileTag";
+import Profile from "./modules/Profile";
 
 const {Sider,Content,Footer} = Layout;
 
@@ -32,8 +33,9 @@ const App = () => {
             <Route path="rooms/new/:id" element={<NewGroupChat/>}/> 
             <Route path="invites" element={<InviteList/>}/>
              <Route path="userList" element={<UserList/>}/>  
-            <Route path="friends" element={<FriendList/>}/>
-             {/* <Route path="chats/new-chat" element={<FriendList/>}/>
+            <Route path="friends" element={<FriendList/>}/> 
+            <Route path="my-profile" element={<Profile/>}/>
+             {/*
             <Route path="statuses" element={<Statuses/>}/>  */}
          </Routes>  
           </Content>
@@ -42,10 +44,7 @@ const App = () => {
           </Footer>
         </Layout>
     </Layout>
-  // <Routes> 
-  //   <Route path="" element={<Orders/>}/> 
-  //   <Route path="order/:id" element={<DetailedOrder/>}/> 
-  // </Routes>  
+
   );}
 
 export default App;

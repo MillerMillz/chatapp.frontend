@@ -17,7 +17,7 @@ const HubContextProvider =({children})=>{
     const { Authuser} = useUserContext();
     const connect  = async () => {
         try{
-            const connection = new HubConnectionBuilder().withUrl("http://localhost:7124/ChatHub",{
+            const connection = new HubConnectionBuilder().withUrl("http://192.168.0.29:7124/ChatHub",{
                 accessTokenFactory: () => localStorage.getItem("jwt")
             }).configureLogging(LogLevel.Information).build();
 

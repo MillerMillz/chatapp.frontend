@@ -37,15 +37,15 @@ if(chatRoom.image)
       
         <div className="content" style={{height:85}}>
             <div className="row">  
-            <div className="col-1">
+            <div className="col-2 col-md-2 col-lg-1">
             <img src={display} onClick={(event)=>{ event.stopPropagation(); console.log("image")}}  class="rounded-circle" width={"100%"}  height={80} />
             </div>
-            <div className="col-9">
+            <div className="col-6 col-md-7 col-lg-9">
                    <p style={{fontSize:30,width:'85%',fontWeight:"bold"}}>{chatRoom.name}</p>
                 
          <div  >{lastMessage.messageContent}</div>
             </div>
-            <div className="col-2 d-flex align-items-center justify-content-center">
+            <div className="col-4 col-md-3 col-lg-2 d-flex align-items-center justify-content-center">
                 
             <p style={{fontSize:30,color: "green"}}>{getTime()}</p>
              <Badge count={unreadMessages} overflowCount={99} color= {(lastMessage.viewed || lastMessage.senderID===Authuser.id) ? "white":"green" } style={{marginLeft:'20px',marginTop:'-10px'}}></Badge> 

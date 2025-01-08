@@ -38,7 +38,6 @@ const put = async(apiRoute,body)=>{
     var data = response.json();
     return data;
 }
-
 const Delete = async(apiRoute)=>{
     var response = await fetch(apiRoute,{
         method:"delete",
@@ -47,6 +46,21 @@ const Delete = async(apiRoute)=>{
             "Authorization":`Bearer ${localStorage.getItem('jwt')}`
         }),
         credentials:"include"
+      
+    });
+
+    var data = response.json();
+    return data;
+}
+const DeleteAccount = async(apiRoute,body)=>{
+    var response = await fetch(apiRoute,{
+        method:"delete",
+        headers:new Headers({
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${localStorage.getItem('jwt')}`
+        }),
+        credentials:"include",
+        body:JSON.stringify(body)
       
     });
 
@@ -71,4 +85,4 @@ const post = async(apiRoute,body)=>{
 }
 
 
-module.exports={get,post,Delete,put,put2}
+module.exports={get,post,Delete,DeleteAccount,put,put2}

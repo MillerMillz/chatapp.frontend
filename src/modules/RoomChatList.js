@@ -159,6 +159,7 @@ const RoomChatList = () => {
             id="myTabs"
             className="mb-3">
                 <Tab eventKey="newRoom" title="New Room">
+                <div style={{width:"100%",height:"calc(100vh - 350px)",maxHeight:"60vh",overflowY:'scroll'}}>
                 <div style={{width:"100%"}}>
             
                  <Form.Group>
@@ -174,13 +175,11 @@ const RoomChatList = () => {
                    <Image src={profilePicture}  style={{ height:"200px",borderRadius:"50%"}}/></div>
                 </Form.Group>
             </div>
-           
-          
               <div style={{width:"100%",textAlign:"center"}}>
                     
               <Button variant="primary" onClick={()=>{submitForm()}} style={{width:"50%"}} >Create Room</Button>
              
-        </div>
+        </div></div>
       </Tab>
       <Tab eventKey="joinRoom" title="Join a Room">
       <MDBInputGroup>
@@ -190,7 +189,7 @@ const RoomChatList = () => {
         </MDBBtn>
       </MDBInputGroup>
       <hr style={{color:"#66d9ff"}}/> 
-      <div style={{width:"100%",maxHeight:"55vh",overflowY:'scroll'}}>
+      <div style={{width:"100%",height:"calc(100vh - 400px)",maxHeight:"60vh",overflowY:'scroll'}}>
         {
             rooms.filter(item=> !joinedRooms.some(e => e.id===item.id)).filter((item)=>{
                 return roomFilter.toLowerCase() ==='' ? item: item.name.toLowerCase().includes(roomFilter)
@@ -207,7 +206,7 @@ const RoomChatList = () => {
         </MDBBtn>
       </MDBInputGroup>
       <hr style={{color:"#66d9ff"}}/> 
-      <div style={{width:"100%",maxHeight:"55vh",overflowY:'scroll'}}>
+      <div style={{width:"100%" ,height:"calc(100vh - 400px)",maxHeight:"60vh",overflowY:'scroll'}}>
         {
             joinedRooms.filter((item)=>{
                 return joinedRoomFilter.toLowerCase() ==='' ? item: item.name.toLowerCase().includes(joinedRoomFilter)
